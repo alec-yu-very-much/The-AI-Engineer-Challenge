@@ -15,7 +15,7 @@ interface Conversation {
   createdAt: number;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const STORAGE_KEY = "mental-coach-conversations";
 
 function generateId() {

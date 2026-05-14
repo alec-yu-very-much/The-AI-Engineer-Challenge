@@ -1,8 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from openai import OpenAI
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -24,13 +27,16 @@ class ChatRequest(BaseModel):
 
 @app.get("/")
 def root():
+    index_path = Path(__file__).resolve().parent.parent / "frontend" / "out" / "index.html"
+    if index_path.exists():
+        return FileResponse(index_path)
     return {"status": "ok"}
 
 @app.post("/api/chat")
 def chat(request: ChatRequest):
     if not os.getenv("OPENAI_API_KEY"):
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
-    
+
     try:
         user_message = request.message
         response = client.chat.completions.create(
@@ -43,3 +49,8 @@ def chat(request: ChatRequest):
         return {"reply": response.choices[0].message.content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error calling OpenAI API: {str(e)}")
+
+# Serve Next.js static assets (JS, CSS, images under /_next/)
+static_dir = Path(__file__).resolve().parent.parent / "frontend" / "out"
+if static_dir.exists():
+    app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="frontend")
