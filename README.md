@@ -198,46 +198,109 @@ For each prompt Identify what capability is being tested (e.g., *summarization a
 
 **1. Prompt:**  
 Explain the concept of object-oriented programming in simple terms to a complete beginner.  
-**Aspect Tested:**  <!-- Write your answer here -->
+**Aspect Tested:**  reasoning
 
 **Response:**  
-<!-- Add your app's response here -->
+I'd be happy to explain object-oriented programming (OOP) in a way that's easy to understand!
+
+Think of it like building with LEGO blocks
+Imagine you're organizing a toy box. Instead of throwing everything in randomly, you group similar items together:
+
+Objects are like individual toys - each has:
+
+Properties (what it looks like): color, size, shape
+Actions (what it can do): a car can drive, a doll can walk
+Real-world example: A Car
+Let's say you're creating a car in a program:
+
+Properties (data):
+
+Color: red
+Brand: Toyota
+Speed: 0 mph
+Methods (actions):
+
+Start engine
+Accelerate
+Brake
+Turn
+The Four Main Ideas:
+Classes = The blueprint (like a cookie cutter)
+Objects = The actual thing made from that blueprint (the cookies)
+Inheritance = A sports car inherits all car features, plus adds turbo
+Encapsulation = Keeping the engine details hidden - you just turn the key
+Why is this helpful?
+Reusable: Create the car blueprint once, make 1000 different cars
+Organized: Everything related to cars stays together
+Maintainable: Fix the engine in one place, all cars benefit
+Natural: Matches how we think about real-world objects
+Think of OOP as a way to organize code the same way you'd organize your room - everything has its place and purpose!
+
+Does this help clarify the concept for you?
 
 ---
 
 **2. Prompt:**  
 Read the following paragraph and provide a concise summary of the key points…  
-**Aspect Tested:**  
+**Aspect Tested:**  summarization
 
 **Response:**  
-<!-- Add your app's response here -->
+I'd be happy to help you summarize a paragraph! However, I don't see any paragraph included in your message. Could you please share the text you'd like me to summarize? Once you provide it, I'll give you a clear, concise summary of the key points.
 
 ---
 
 **3. Prompt:**  
 Write a short, imaginative story (100–150 words) about a robot finding friendship in an unexpected place.  
-**Aspect Tested:**  <!-- Write your answer here -->
+**Aspect Tested:**  creativity
 
 **Response:**  
-<!-- Add your app's response here -->
+The Garden Circuit
+
+Unit-47 had malfunctioned again. While other maintenance robots returned to their charging stations, he found himself drawn to the abandoned rooftop garden. His sensors detected withering plants—inefficient, his programming declared. Yet something made him stay.
+
+Day after day, Unit-47 returned, watering the forgotten tomatoes and herbs. His logical circuits couldn't explain why he felt... satisfied when green shoots emerged.
+
+One morning, he discovered a small sparrow had built her nest among the thriving vines. She chirped curiously at the metal visitor instead of fleeing. Unit-47 extended a gentle claw, and she perched fearlessly on it.
+
+"Hello, little friend," he whispered in his mechanical voice.
+
+The sparrow tilted her head and sang back.
+
+For the first time since activation, Unit-47 understood that friendship wasn't programmed—it grew naturally, like the garden they now shared, in the space between logic and heart.
 
 ---
 
 **4. Prompt:**  
 If a store sells apples in packs of 4 and oranges in packs of 3, how many packs of each do I need to buy to get exactly 12 apples and 9 oranges?  
-**Aspect Tested:**  <!-- Write your answer here -->
+**Aspect Tested:**  reasoning
 
 **Response:**  
-<!-- Add your app's response here -->
+Let me help you work through this step by step!
+
+For the apples:
+
+You need 12 apples total
+Apples come in packs of 4
+12 ÷ 4 = 3 packs of apples
+For the oranges:
+
+You need 9 oranges total
+Oranges come in packs of 3
+9 ÷ 3 = 3 packs of oranges
+Answer: You need 3 packs of apples and 3 packs of oranges.
+
+Great job thinking through this problem! Breaking it down into smaller parts makes it much easier to solve. You've got this! 🍎🍊
 
 ---
 
 **5. Prompt:**  
 Rewrite the following paragraph in a professional, formal tone…  
-**Aspect Tested:**  <!-- Write your answer here -->
+**Aspect Tested:**  creativity
 
 **Response:**  
-<!-- Add your app's response here -->
+I'd be happy to help you rewrite a paragraph in a professional, formal tone. However, I don't see the paragraph you'd like me to revise in your message. Could you please share the text you'd like me to rewrite?
+
+Once you provide the paragraph, I'll transform it into a more formal and professional version while maintaining its original meaning and key points.
 
 ---
 
@@ -246,7 +309,7 @@ Rewrite the following paragraph in a professional, formal tone…
 Do the answers appear to be correct and useful?
 
 **Your Answer:**  
-<!-- Write your answer here -->
+The completed responses are both correct and useful. They demonstrate good analytical thinking, clear communication, and a supportive approach - all valuable life skills that extend beyond just answering questions.
 
 ---
 
@@ -257,26 +320,84 @@ Now test your app with **real-world prompts that are relevant to your use case**
 ---
 
 **Prompt:**  
-<!-- Your prompt -->
+I'm feeling overwhelmed at work
 
 **Result:**  
-<!-- App response -->
+
+I hear you, and it's completely understandable to feel overwhelmed at work. That feeling can be really draining and stressful. You're not alone in experiencing this.
+
+Let's take a step back together. Can you tell me what's contributing most to that overwhelming feeling right now? Is it:
+
+Too many tasks or deadlines piling up?
+Difficulty prioritizing what's most important?
+Workplace relationships or communication challenges?
+Something else entirely?
+Sometimes just naming what's causing the overwhelm can help us start to address it. Take your time - I'm here to listen and help you work through this.
 
 ---
 
 **Prompt:**  
-<!-- Your prompt -->
+Help me set achievable goals
 
 **Result:**  
-<!-- App response -->
+I'd be happy to help you set achievable goals! Let's work together to create a framework that sets you up for success.
+
+First, let's explore what you want to focus on:
+
+What area of your life would you like to improve? (career, health, relationships, personal growth, etc.)
+What's motivating you to set this goal right now?
+Here's a proven approach we can use - the SMART framework:
+
+S - Specific: Clear and well-defined M - Measurable: You can track progress A - Achievable: Realistic given your current situation R - Relevant: Meaningful to your life T - Time-bound: Has a clear deadline
+
+Additional tips for success:
+
+Start smaller than you think you should
+Break big goals into weekly mini-goals
+Plan for obstacles (what might get in your way?)
+Celebrate small wins along the way
+Let's start with one goal that's important to you right now.
+
+What would you like to work toward? Even if it feels big or unclear, share what's on your mind and we can shape it into something actionable together.
+
+Remember: The best goal is one you'll actually stick with, not necessarily the most ambitious one!
 
 ---
 
 **Prompt:**  
-<!-- Your prompt -->
+How do I manage stress better?
 
 **Result:**  
-<!-- App response -->
+Here are some effective strategies to help you manage stress better:
+
+Immediate stress relief:
+
+Practice deep breathing (4-7-8 technique: inhale for 4, hold for 7, exhale for 8)
+Try progressive muscle relaxation
+Take a brief walk or do light stretching
+Use the 5-4-3-2-1 grounding technique (5 things you see, 4 you hear, etc.)
+Daily habits:
+
+Maintain consistent sleep (7-9 hours)
+Exercise regularly, even just 10-15 minutes
+Eat nutritious meals and stay hydrated
+Set boundaries with work and social commitments
+Practice mindfulness or meditation
+Long-term strategies:
+
+Identify your stress triggers and patterns
+Develop problem-solving skills for manageable stressors
+Build a support network of friends, family, or professionals
+Learn to reframe negative thoughts
+Engage in hobbies you enjoy
+Organization tools:
+
+Keep a daily schedule or to-do list
+Break large tasks into smaller steps
+Practice saying "no" to prevent overcommitment
+What type of stress are you dealing with most? Work, relationships, health, or something else? Understanding your specific situation can help me offer more targeted suggestions.
+
+Remember, managing stress is a skill that improves with practice, so be patient with yourself as you try different approaches.
 
 ---
 
@@ -285,7 +406,11 @@ Now test your app with **real-world prompts that are relevant to your use case**
 Are the vibes of your assistant aligned with your expectations? Why or why not?
 
 **Your Answer:**  
-<!-- Write your answer here -->
+The responses hit the functional marks (empathetic opener, structured content, follow-up question) but the vibe reads more like a wellness chatbot template than an actual coach.
+
+Over-validation without substance. "You're not alone in experiencing this" and "that feeling can be really draining" are filler empathy — they don't actually do anything for the person. A real coach would acknowledge and move.
+List overload. All three responses lean heavily on bullets and numbered frameworks (SMART goals, 4-7-8 breathing, 5-4-3-2-1 grounding). This creates a clinical, informational tone when the person is likely craving connection and momentum, not a reference sheet.
+Trailing questions that don't commit. Each response ends with a clarifying question before taking any real action. That structure can feel like the assistant is avoiding being helpful until it gets more information — which reads as evasive rather than supportive.
 
 ---
 
@@ -303,18 +428,45 @@ Examples:
 ---
 
 **Prompt:**  
-<!-- Your prompt -->
+What does my schedule look like tomorrow?
 
 **Result:**  
-<!-- App response -->
+I don't have access to your personal schedule or calendar, so I can't tell you what you have planned for tomorrow.
+
+To help you prepare mentally for your day, you might want to:
+
+Check your calendar or planner
+Think through any important meetings, appointments, or deadlines
+Consider what energy level different activities might require
+Plan some brief moments for yourself between commitments
+Is there something specific about tomorrow that you're feeling concerned or excited about? I'd be happy to help you mentally prepare or work through any challenges you're anticipating.
 
 ---
 
 **Prompt:**  
-<!-- Your prompt -->
+What time should I leave for the airport?
 
 **Result:**  
-<!-- App response -->
+I'd be happy to help you figure out when to leave for the airport! To give you the best advice, I'll need a few details:
+
+Essential info:
+
+What time is your flight departure?
+Is this a domestic or international flight?
+Which airport are you flying from?
+Where are you traveling from (home, hotel, etc.)?
+Also helpful to know:
+
+What day/time are you traveling? (weekday rush hour vs. weekend affects traffic)
+Are you checking bags or just carry-on?
+Do you have TSA PreCheck or Clear?
+How are you getting to the airport? (driving, rideshare, public transit)
+General rule of thumb:
+
+Domestic flights: arrive 2 hours early
+International flights: arrive 3 hours early
+Add extra time for traffic, parking, and any potential delays
+Once you share those details, I can help you work backwards from your departure time to determine the ideal time to leave!
 
 ---
 
@@ -323,7 +475,7 @@ Examples:
 What are some limitations of your application?
 
 **Your Answer:**  
-<!-- Write your answer here -->
+The app has no access to live information (news, weather, schedules) — it can only respond based on the model's training data cutoff. Memory & External tools: Each message is sent independently to the API with no conversation history passed to the model, and it can't call external services (calendars, search engines, databases) to take actions or retrieve information.
 
 ---
 
@@ -339,10 +491,11 @@ Then rerun your vibe check and document:
 ---
 
 **Adjustments Made:**  
-<!-- Describe what you changed -->
+- Improved system prompt with role and tone, focus area, guardrails, and formatting.
+- Added conversation history. 
 
 **Results:**  
-<!-- What improved? What didn’t? -->
+Better response quality (improved actionable items and friendliness vibes as well as coaching tone) and the ability to continue conversations. 
 
 ---
 

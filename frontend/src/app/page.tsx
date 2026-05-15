@@ -17,6 +17,9 @@ interface Conversation {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const STORAGE_KEY = "mental-coach-conversations";
+const SESSION_INIT_KEY = "mental-coach-session-init";
+const SESSION_ACTIVITY_KEY = "mental-coach-last-activity";
+const SESSION_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -36,6 +39,16 @@ function saveConversations(convos: Conversation[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(convos));
 }
 
+function touchActivity() {
+  sessionStorage.setItem(SESSION_ACTIVITY_KEY, Date.now().toString());
+}
+
+function isSessionExpired(): boolean {
+  const last = sessionStorage.getItem(SESSION_ACTIVITY_KEY);
+  if (!last) return false;
+  return Date.now() - parseInt(last, 10) > SESSION_TIMEOUT_MS;
+}
+
 export default function Home() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -45,14 +58,50 @@ export default function Home() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Load conversations from localStorage on mount
+  // On mount: load history, then always start a fresh conversation for this tab
   useEffect(() => {
     const loaded = loadConversations();
-    setConversations(loaded);
-    if (loaded.length > 0) {
-      setActiveId(loaded[0].id);
+    const isNewTab = !sessionStorage.getItem(SESSION_INIT_KEY);
+
+    if (isNewTab || isSessionExpired()) {
+      // New tab or expired session — start fresh
+      const newConvo: Conversation = {
+        id: generateId(),
+        title: "New conversation",
+        messages: [],
+        createdAt: Date.now(),
+      };
+      const updated = [newConvo, ...loaded];
+      setConversations(updated);
+      setActiveId(newConvo.id);
+      sessionStorage.setItem(SESSION_INIT_KEY, newConvo.id);
+      touchActivity();
+    } else {
+      // Same tab, session still valid — restore active conversation
+      setConversations(loaded);
+      const resumeId = sessionStorage.getItem(SESSION_INIT_KEY);
+      setActiveId(resumeId && loaded.some((c) => c.id === resumeId) ? resumeId : loaded[0]?.id ?? null);
     }
   }, []);
+
+  // Check for session expiry every 60 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isSessionExpired() && !loading) {
+        const newConvo: Conversation = {
+          id: generateId(),
+          title: "New conversation",
+          messages: [],
+          createdAt: Date.now(),
+        };
+        setConversations((prev) => [newConvo, ...prev]);
+        setActiveId(newConvo.id);
+        sessionStorage.setItem(SESSION_INIT_KEY, newConvo.id);
+        touchActivity();
+      }
+    }, 60_000);
+    return () => clearInterval(interval);
+  }, [loading]);
 
   // Persist conversations whenever they change
   useEffect(() => {
@@ -122,6 +171,7 @@ export default function Home() {
       setActiveId(currentId);
     }
 
+    touchActivity();
     const userMsg: Message = { role: "user", content: trimmed };
 
     // Update conversation with user message + set title from first message
