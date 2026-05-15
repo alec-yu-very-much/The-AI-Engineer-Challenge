@@ -1,6 +1,7 @@
 """LLM service that defaults to Azure OpenAI, falling back to Anthropic SDK."""
 
 import os
+import time
 import logging
 
 logger = logging.getLogger(__name__)
@@ -46,48 +47,105 @@ def _chat_azure_openai(user_message: str) -> str:
     """Send a chat request via Azure OpenAI."""
     from openai import AzureOpenAI
 
-    client = AzureOpenAI(
-        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-12-01-preview"),
+    endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+    model = os.getenv("AZURE_OPENAI_MODEL", "gpt-5.1")
+    api_version = os.getenv("AZURE_OPENAI_API_VERSION", "2024-12-01-preview")
+
+    logger.info(
+        "[azure_openai] request | model=%s endpoint=%s api_version=%s prompt_len=%d",
+        model, endpoint, api_version, len(user_message),
     )
 
-    response = client.chat.completions.create(
-        model=os.getenv("AZURE_OPENAI_MODEL", "gpt-4.1-mini"),
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
+    client = AzureOpenAI(
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        azure_endpoint=endpoint,
+        api_version=api_version,
     )
-    return response.choices[0].message.content
+
+    start = time.perf_counter()
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message},
+            ],
+        )
+        elapsed = time.perf_counter() - start
+        reply = response.choices[0].message.content
+
+        usage = response.usage
+        logger.info(
+            "[azure_openai] response | duration=%.2fs model=%s "
+            "prompt_tokens=%s completion_tokens=%s total_tokens=%s reply_len=%d",
+            elapsed, response.model,
+            usage.prompt_tokens if usage else "n/a",
+            usage.completion_tokens if usage else "n/a",
+            usage.total_tokens if usage else "n/a",
+            len(reply) if reply else 0,
+        )
+        return reply
+    except Exception as e:
+        elapsed = time.perf_counter() - start
+        logger.error(
+            "[azure_openai] error | duration=%.2fs error_type=%s error=%s",
+            elapsed, type(e).__name__, e,
+        )
+        raise
 
 
 def _chat_anthropic(user_message: str) -> str:
     """Send a chat request via Anthropic SDK (supports Azure-hosted endpoint)."""
     import anthropic
 
-    kwargs = {"api_key": os.getenv("ANTHROPIC_API_KEY")}
-
-    # If a custom endpoint is set (e.g. Azure AI Services), use it
     endpoint = os.getenv("ANTHROPIC_ENDPOINT")
+    model = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+
+    logger.info(
+        "[anthropic] request | model=%s endpoint=%s prompt_len=%d",
+        model, endpoint or "api.anthropic.com", len(user_message),
+    )
+
+    kwargs = {"api_key": os.getenv("ANTHROPIC_API_KEY")}
     if endpoint:
         kwargs["base_url"] = endpoint.rstrip("/")
 
     client = anthropic.Anthropic(**kwargs)
 
-    response = client.messages.create(
-        model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
-        max_tokens=1024,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_message}],
-    )
-    return response.content[0].text
+    start = time.perf_counter()
+    try:
+        response = client.messages.create(
+            model=model,
+            max_tokens=1024,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user_message}],
+        )
+        elapsed = time.perf_counter() - start
+        reply = response.content[0].text
+
+        logger.info(
+            "[anthropic] response | duration=%.2fs model=%s "
+            "input_tokens=%s output_tokens=%s stop_reason=%s reply_len=%d",
+            elapsed, response.model,
+            response.usage.input_tokens,
+            response.usage.output_tokens,
+            response.stop_reason,
+            len(reply),
+        )
+        return reply
+    except Exception as e:
+        elapsed = time.perf_counter() - start
+        logger.error(
+            "[anthropic] error | duration=%.2fs error_type=%s error=%s",
+            elapsed, type(e).__name__, e,
+        )
+        raise
 
 
 def chat(user_message: str) -> str:
     """Route a chat message to the configured LLM provider and return the reply."""
     provider = _get_provider()
-    logger.info("Using LLM provider: %s", provider)
+    logger.info("Routing to provider=%s", provider)
 
     if provider == "azure_openai":
         return _chat_azure_openai(user_message)

@@ -4,12 +4,19 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
+import logging
 from pathlib import Path
 from dotenv import load_dotenv
 
-from api.llm_service import chat as llm_chat
-
 load_dotenv()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s — %(message)s",
+    datefmt="%H:%M:%S",
+)
+
+from api.llm_service import chat as llm_chat
 
 app = FastAPI()
 
@@ -30,8 +37,11 @@ def root():
         return FileResponse(index_path)
     return {"status": "ok"}
 
+logger = logging.getLogger(__name__)
+
 @app.post("/api/chat")
 def chat(request: ChatRequest):
+    logger.info("[user_input] message=%r", request.message)
     try:
         reply = llm_chat(request.message)
         return {"reply": reply}
